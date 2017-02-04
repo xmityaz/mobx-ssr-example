@@ -19,10 +19,12 @@
     "babel-polyfill": "^6.9.1",
     "babel-preset-react": "^6.11.1",
     "express": "^4.14.0",
+    "isomorphic-fetch": "^2.2.1",
     "mobx": "^2.3.3",
     "mobx-react": "^3.4.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
+    "react-jobs": "^0.6.2",
     "react-router": "^2.5.1"
   },
   "devDependencies": {

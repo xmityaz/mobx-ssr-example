@@ -1,8 +1,10 @@
 import { observable, action } from 'mobx';
+require('isomorphic-fetch');
 
-export default class AppState {
+export class AppState {
     
   @observable items = [];
+  @observable user = {};
 
   constructor(initialState) {
     this.items = initialState && initialState.appstate && initialState.appstate.items ? initialState.appstate.items : [];
@@ -12,6 +14,17 @@ export default class AppState {
   addItem(item) {
     this.items.push(item);
   }
+
+  @action
+  loadUser() {
+    console.log('feeeeetch');
+    return fetch('http://localhost:3000/api/user')
+    .then(res => res.json())
+    .then(user => {
+      console.log(user);
+      this.user = user;
+    });
+  }
   
   toJson() {
     return {
@@ -19,4 +32,6 @@ export default class AppState {
     };
   }
 }
+
+export default new AppState();
 

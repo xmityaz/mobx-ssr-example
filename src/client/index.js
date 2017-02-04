@@ -13,7 +13,7 @@ const appstate = new AppState(window.__INITIAL_STATE__);
 
 render(
     <Provider appstate={ appstate }>
-        <Router children={ routes } history={ browserHistory }/>
+        <Router children={ routes } history={ browserHistory } />
     </Provider>,
     document.getElementById('root')
 );

@@ -4,5 +4,5 @@ import Root from './components/root';
 
 
 export default (
-  <Route path='/' component={ Root } />
+  <Route path='/' component={ Root } rand="om" />
 );
