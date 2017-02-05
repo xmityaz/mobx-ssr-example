@@ -6,10 +6,11 @@ import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'mobx-react';
 
-import AppState from '../common/stores/appstate';
+import appstate from '../common/stores/appstate';
 import routes from '../common/routes';
 
-const appstate = new AppState(window.__INITIAL_STATE__);
+// console.log(window.__INITIAL_STATE__);
+// const appstate = initState(window.__INITIAL_STATE__);
 
 render(
     <Provider appstate={ appstate }>

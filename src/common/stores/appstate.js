@@ -8,6 +8,7 @@ export class AppState {
 
   constructor(initialState) {
     this.items = initialState && initialState.appstate && initialState.appstate.items ? initialState.appstate.items : [];
+    this.user = initialState && initialState.appstate && initialState.appstate.user ? initialState.appstate.user : {};
   }
   
   @action
@@ -17,7 +18,12 @@ export class AppState {
 
   @action
   loadUser() {
-    console.log('feeeeetch');
+    console.log('feeeeetch', this.user);
+
+    if (this.user.firstName) {
+      return Promise.resolve();
+    }
+
     return fetch('http://localhost:3000/api/user')
     .then(res => res.json())
     .then(user => {
@@ -28,10 +34,12 @@ export class AppState {
   
   toJson() {
     return {
-      items: this.items
+      items: this.items,
+      user: this.user
     };
   }
 }
 
-export default new AppState();
+const initialState = typeof window === 'object' ? window.__INITIAL_STATE__ : undefined;
 
+export default new AppState(initialState);

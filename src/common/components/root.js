@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { withJob } from 'react-jobs/ssr';
+import { resolve } from 'react-resolver';
+// import { withJob } from 'react-jobs/ssr';
 import appstate from '../stores/appstate'
 
 @observer(['appstate'])
+@resolve('', () => {
+    return appstate.loadUser()
+})
 class Root extends Component {
 
     constructor(props) {
@@ -20,7 +24,6 @@ class Root extends Component {
     render() {
 
         const { appstate } = this.props;
-        console.log(appstate);
         const user = appstate.user || { firstName: 'null', lastName: 'null' }
 
         return (
@@ -35,6 +38,8 @@ class Root extends Component {
     }
 }
 
-export default withJob(
-    (props) => appstate.loadUser()
-)(Root);
+// export default withJob(
+//     (props) => appstate.loadUser()
+// )(Root);
+
+export default Root;

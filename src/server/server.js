@@ -2,7 +2,9 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
 import { Provider } from 'mobx-react';
-import { runJobs } from 'react-jobs/ssr';
+// import { runJobs } from 'react-jobs/ssr';
+import { Resolver } from "react-resolver";
+
 
 import express from 'express';
 
@@ -11,7 +13,8 @@ import appstate from '../common/stores/appstate';
 import routes from '../common/routes';
 
 const app = express();
-
+//const appstate = initState();
+//console.log(appstate, Date.now());
 
 const renderView = (componentHTML, initialState) => {
     const HTML = `
@@ -61,16 +64,15 @@ app.use((req, res) => {
 
         const component = (
             <Provider appstate={appstate}>
-                <RouterContext {...renderProps} appstate={appstate} />
+                <RouterContext {...renderProps} />
             </Provider>
         );
 
-        runJobs(component)
-            .then((runResult) => {
-                const { appWithJobs } = runResult;
-                const componentHTML = renderToString(appWithJobs);
+        Resolver.resolve(() => component)
+            .then(({ Resolved }) => {
+                const componentHTML = renderToString(<Resolved />);
                 const initialState = { appstate: appstate.toJson() };
-
+                console.log(initialState);
 
                 res.send(renderView(componentHTML, initialState));
             })
